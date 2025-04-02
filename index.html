@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Design & Development</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <span class="brand-text">n1raj</span>
+            <span class="x-figma">× figma</span>
+        </div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#memories">Memories</a>
+            <a href="#contact">Contact</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Design. Create.<br><span class="highlight">Innovate.</span></h1>
+            <p>Crafting intuitive digital experiences that merge aesthetic beauty with functional design.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn primary">View My Work</a>
+                <a href="#contact" class="btn secondary">Get In Touch</a>
+            </div>
+        </div>
+        <a href="#about" class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="profile-frame">
+                <div class="circle-mask">
+                    <img src="images/me.jpg" alt="Niraj Chaudhary" class="profile-image">
+                </div>
+                <div class="profile-decor"></div>
+            </div>
+            
+            <div class="about-content">
+                <h1 class="intro-heading">I'm <span class="name-highlight">Niraj Chaudhary</span></h1>
+                
+                <p class="intro-text">
+                    Figma designer and developer with a passion for creating beautiful, functional, and user-centered 
+                    digital experiences. I combine strategic thinking with design execution to craft solutions that 
+                    not only look amazing but also solve real user problems.
+                </p>
+                
+                <div class="details-table">
+                    <div class="detail-row">
+                        <div class="detail-cell">
+                            <span class="detail-label">Name:</span>
+                            <span class="detail-value">Niraj Chaudhary</span>
+                        </div>
+                        <div class="detail-cell">
+                            <span class="detail-label">Experience:</span>
+                            <span class="detail-value"><li>2+ Years</li><li>BSc IT student</li></span>
+                        </div>
+                        <div class="detail-cell">
+                            <span class="detail-label">Specialty:</span>
+                            <span class="detail-value"><li>UI/UX</li><li>Interaction Design</li> <li>Prototyping</li> <li>Web Development</li> </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="connect-section">
+                    <span class="connect-label">Connect:</span>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=100065314732928" class="social-icon" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/n1ra_j_/" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/n1raj-chaudhary-a914b6256/" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@n1ra_j_" class="social-icon" aria-label="Youtube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <h2 class="section-title">My Projects</h2>
+        <p class="section-subtitle">Selected works showcasing my design and development skills</p>
+        
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <span class="project-category">APP DESIGN</span>
+                <h3 class="project-title">Food Delivery App</h3>
+                <p class="project-description">A modern food delivery application with intuitive UI and smooth user experience.</p>
+                <button class="view-details-btn" onclick="openGallery('gallery1')">View Details →</button>
+            </div>
+        
+            <!-- Project 2 -->
+            <div class="project-card">
+                <span class="project-category">WEB DESIGN</span>
+                <h3 class="project-title">Website</h3>
+                <p class="project-description">Here is some website design mockups. You can view them in the gallery.</p>
+                <button class="view-details-btn" onclick="openGallery('gallery2')">View Details →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memories Section -->
+    <section id="memories" class="memories-section">
+        <h2 class="section-title">Memories & Experiences</h2>
+        <p class="section-subtitle">A collection of my personal moments and creative explorations</p>
+        
+        <div class="memories-grid">
+            <!-- Memory 1 -->
+            <div class="memory-card">
+                <span class="memory-category">48 hours experience</span>
+                <h3 class="memory-title">48 hours Clock makers</h3>
+                <p class="memory-description">A memorable experience of 48 hours with my team members which was a great experience.</p>
+                <button class="view-details-btn" onclick="openGallery('memory1')">View Gallery →</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Modal -->
+    <div id="gallery-modal" class="gallery-modal">
+        <span class="close-btn" onclick="closeGallery()">&times;</span>
+        <div class="gallery-content">
+            
+            <!-- Project Gallery 1 -->
+            <div id="gallery1" class="project-gallery">
+                <h2>Food Delivery App</h2>
+                <p>A modern food delivery application with intuitive UI and smooth user experience.</p>
+                <div class="gallery-grid">
+                    <img src="images/website.webp" alt="App Screenshot 1">
+                    <img src="images/website.webp" alt="App Screenshot 2">
+                    <img src="images/website.webp" alt="App Screenshot 3">
+                </div>
+            </div>
+            
+            <!-- Project Gallery 2 -->
+            <div id="gallery2" class="project-gallery">
+                <h2>Website Mock</h2>
+                <p>Here is some mockups of my website designs. Clean, modern, and user-friendly website mockups showcasing intuitive design and functionality.</p>
+                <div class="gallery-grid">
+                    <img src="memories/niraj.png" alt="Website Screenshot 1">
+                    <img src="memories/web.png" alt="Website Screenshot 2">
+                    <img src="memories/cont.png" alt="Website Screenshot 3">
+                    <img src="memories/webs.png" alt="Website Screenshot 4">
+                </div>
+            </div>
+            
+            <!-- Memory Gallery 1 -->
+            <div id="memory1" class="memory-gallery">
+                <h2>Photos of 48 hours Clock makers</h2>
+                <p>Capturing the sense of our 48 hours Clock makers event.</p>
+                <div class="gallery-grid">
+                    <img src="images/aa.jpg" alt="Berlin Photo 1">
+                    <img src="images/bb.jpg" alt="Berlin Photo 2">
+                    <img src="images/foot.jpg" alt="Berlin Photo 3">
+                    <img src="images/red.jpg" alt="Berlin Photo 4">
+                    <img src="images/img.jpg" alt="Berlin Photo 5">
+                    <img src="images/cer.jpg" alt="Berlin Photo 6">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h3 class="section-title" style="color: var(--primary-color);">Get In Touch</h3>  
+            <h2 class="section-title">Let's Work Together</h2>
+            <p class="section-subtitle">Have a project in mind or want to discuss a collaboration? I'd love to hear from you.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 class="info-title">Contact Information</h3>
+                    
+                    <div class="info-group">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>ninjaniraj760@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+977 9810196579, 9749395345</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-media">
+                        <h4>Social Media</h4>
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/profile.php?id=100065314732928" class="social-icon" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://www.instagram.com/n1ra_j_/" class="social-icon" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/n1raj-chaudhary-a914b6256/" class="social-icon" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@n1ra_j_" class="social-icon" aria-label="Youtube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="experience-info">
+                        <h4>Experience</h4>
+                        <p>2+ years of professional experience creating beautiful, functional UI designs for various clients across multiple industries.</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" placeholder="johndoe@example.com" required>
+                        </div>
+                        
+                        <div class="message-box-container">
+                            <label for="message" class="message-label">Your Message</label>
+                            <div class="message-box-fixed">
+                                <textarea 
+                                    id="message" 
+                                    name="message" 
+                                    class="fixed-textarea"
+                                    rows="5"
+                                    placeholder="Tell me about your project..."
+                                    required
+                                    onfocus="this.removeAttribute('readonly')"
+                                ></textarea>
+                            </div>
+                            <button type="submit" class="send-button">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand">
+                    <span class="brand-text">n1raj</span>
+                    <span class="x-figma">× figma</span>
+                </div>
+                <p>Crafting intuitive digital experiences that merge aesthetic beauty with functional design.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100065314732928" class="social-icon" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/n1ra_j_/" class="social-icon" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/n1raj-chaudhary-a914b6256/" class="social-icon" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@n1ra_j_" class="social-icon" aria-label="Youtube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#memories">Memories</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact Info</h4>
+                <p>Kathmandu, Nepal</p>
+                <p><a href="mailto:nirajniraj760@gmail.com">ninjaniraj760@gmail.com</a></p>
+                <p>+977 9810196579, 9746355345</p>
+            </div>
+        </div>
+        <br>
+        <p style="display: block; text-align: center;">&copy; 2025 n1raj x-figma. All Rights Reserved.</p>
+    </footer>
+   
+    <script>
+        // Gallery functionality
+        function openGallery(galleryId) {
+            const modal = document.getElementById('gallery-modal');
+            const galleries = document.querySelectorAll('.project-gallery, .memory-gallery');
+            
+            // Hide all galleries
+            galleries.forEach(gallery => {
+                gallery.style.display = 'none';
+            });
+            
+            // Show the selected gallery
+            const selectedGallery = document.getElementById(galleryId);
+            if (selectedGallery) {
+                selectedGallery.style.display = 'block';
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            }
+        }
+
+        function closeGallery() {
+            const modal = document.getElementById('gallery-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            const modal = document.getElementById('gallery-modal');
+            if (event.target == modal) {
+                closeGallery();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            const modal = document.getElementById('gallery-modal');
+            if (event.key === 'Escape' && modal.style.display === 'block') {
+                closeGallery();
+            }
+        });
+
+        // Form submission with validation
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const form = e.target;
+            const sendBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = sendBtn.textContent;
+            
+            // Get form values
+            const name = form.querySelector('input[name="name"]').value.trim();
+            const email = form.querySelector('input[name="email"]').value.trim();
+            const message = form.querySelector('textarea[name="message"]').value.trim();
+            
+            // Validate form fields
+            if (!name || !email || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            try {
+                // Show loading state
+                sendBtn.disabled = true;
+                sendBtn.textContent = 'Sending...';
+                
+                const formData = { name, email, message };
+
+                // Try with both localhost and 127.0.0.1
+                let response;
+                try {
+                    response = await fetch('http://localhost:3000/api/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                } catch (err) {
+                    // Fallback to 127.0.0.1 if localhost fails
+                    response = await fetch('http://127.0.0.1:3000/api/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                }
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Message sent successfully!');
+                    form.reset();
+                } else {
+                    throw new Error(data.error || 'Error sending message');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Failed to send message. Please try again or contact me directly at nirajniraj760@gmail.com. Error: ${error.message}`);
+            } finally {
+                // Reset button state
+                sendBtn.disabled = false;
+                sendBtn.textContent = originalBtnText;
+            }
+        });
+
+        // Dark mode toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        
+        // Check for saved user preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Set initial theme
+        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+            document.body.classList.add('dark-theme');
+            icon.classList.replace('fa-moon', 'fa-sun');
+        }
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            
+            if (document.body.classList.contains('dark-theme')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Enhanced scroll to contact function
+        function scrollToContact(event) {
+            event.preventDefault();
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                // Calculate navbar height
+                const navbar = document.querySelector('.navbar');
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                
+                // Calculate target position
+                const sectionPosition = contactSection.getBoundingClientRect().top;
+                const offsetPosition = sectionPosition + window.pageYOffset - navbarHeight;
+                
+                // Smooth scroll with fallback
+                try {
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                } catch (e) {
+                    window.scrollTo(0, offsetPosition);
+                }
+                
+                // Add highlight effect
+                contactSection.classList.add('highlight');
+                setTimeout(() => {
+                    contactSection.classList.remove('highlight');
+                }, 2000);
+            }
+        }
+
+        // Initialize event listeners after DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up button event listeners
+            document.querySelectorAll('[data-scroll-to="contact"]').forEach(button => {
+                button.addEventListener('click', scrollToContact);
+            });
+            
+            // Handle hash links
+            document.querySelectorAll('a[href="#contact"]').forEach(anchor => {
+                anchor.addEventListener('click', scrollToContact);
+            });
+        });
+    </script>
+</body>
+</html>
