@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Design & Development</title>
+    <link rel="icon" type="image/png" href="images/lo.jpg">
+    <title>n1raj x Web & Design</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,15 +15,17 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
+        <!-- In the logo section -->
         <div class="logo">
             <span class="brand-text">n1raj</span>
-            <span class="x-figma">× figma</span>
+            <span class="x-figma">× web & design</span>
         </div>
         <div class="nav-links">
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#memories">Memories</a>
             <a href="#contact">Contact</a>
+            <!-- This should be in your navbar -->
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
                 <i class="fas fa-moon"></i>
             </button>
@@ -50,6 +53,7 @@
             <div class="profile-frame">
                 <div class="circle-mask">
                     <img src="images/me.jpg" alt="Niraj Chaudhary" class="profile-image">
+                    <div class="water-ripple"></div>
                 </div>
                 <div class="profile-decor"></div>
             </div>
@@ -118,9 +122,17 @@
             <!-- Project 2 -->
             <div class="project-card">
                 <span class="project-category">WEB DESIGN</span>
-                <h3 class="project-title">Website</h3>
-                <p class="project-description">Here is some website design mockups. You can view them in the gallery.</p>
+                <h3 class="project-title">Website Mockups</h3>
+                <p class="project-description">Clean, modern, and user-friendly website mockups showcasing intuitive design.</p>
                 <button class="view-details-btn" onclick="openGallery('gallery2')">View Details →</button>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <span class="project-category">PROJECT LINKS</span>
+                <h3 class="project-title">Live Projects</h3>
+                <p class="project-description">View my live projects and designs across different platforms.</p>
+                <button class="view-details-btn" onclick="openGallery('gallery3')">View Links →</button>
             </div>
         </div>
     </section>
@@ -138,22 +150,29 @@
                 <p class="memory-description">A memorable experience of 48 hours with my team members which was a great experience.</p>
                 <button class="view-details-btn" onclick="openGallery('memory1')">View Gallery →</button>
             </div>
+
+            <!-- Memory 2 -->
+            <div class="memory-card">
+                <span class="memory-category">Certificates</span>
+                <h3 class="memory-title">Certification of Participation Events</h3>
+                <p class="memory-description">A Certificate awarded for successfully completing a course and participating in a competition.</p>
+                <button class="view-details-btn" onclick="openGallery('memory2')">View Gallery →</button>
+            </div>
         </div>
     </section>
 
     <!-- Gallery Modal -->
     <div id="gallery-modal" class="gallery-modal">
-        <span class="close-btn" onclick="closeGallery()">&times;</span>
         <div class="gallery-content">
+            <button class="close-btn" onclick="closeGallery()">&times;</button>
             
             <!-- Project Gallery 1 -->
             <div id="gallery1" class="project-gallery">
                 <h2>Food Delivery App</h2>
                 <p>A modern food delivery application with intuitive UI and smooth user experience.</p>
                 <div class="gallery-grid">
-                    <img src="images/website.webp" alt="App Screenshot 1">
-                    <img src="images/website.webp" alt="App Screenshot 2">
-                    <img src="images/website.webp" alt="App Screenshot 3">
+                    <img src="mockup/foodbazzar.png" alt="App Screenshot 1">
+                    <img src="mockup/instagram.png" alt="App Screenshot 2">
                 </div>
             </div>
             
@@ -162,24 +181,76 @@
                 <h2>Website Mock</h2>
                 <p>Here is some mockups of my website designs. Clean, modern, and user-friendly website mockups showcasing intuitive design and functionality.</p>
                 <div class="gallery-grid">
-                    <img src="memories/niraj.png" alt="Website Screenshot 1">
-                    <img src="memories/web.png" alt="Website Screenshot 2">
-                    <img src="memories/cont.png" alt="Website Screenshot 3">
-                    <img src="memories/webs.png" alt="Website Screenshot 4">
+                    <img src="mockup/niraj.png" alt="Website Screenshot 1">
+                    <img src="mockup/web.png" alt="Website Screenshot 2">
+                    <img src="mockup/cont.png" alt="Website Screenshot 3">
+                    <img src="mockup/webs.png" alt="Website Screenshot 4">
                 </div>
             </div>
-            
+
+            <!-- Project Gallery 3 -->
+            <div id="gallery3" class="project-gallery">
+                <h2>Project Links</h2>
+                <p>Access my live projects and design work</p>
+                <div class="project-links-container">
+                    <a href="https://www.figma.com/design/OH9zHmfgULOS7s0xqRqV5L/all-project-view?node-id=0-1&t=bY4KcMiHgcu74Ym8-1" class="project-link-item" target="_blank">
+                        <i class="fab fa-figma"></i>
+                        <div class="link-content">
+                            <h3>View all figma projects</h3>
+                            <p>View the complete UI/UX design on Figma</p>
+                        </div>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+
+               <!--     <a href="https://www.behance.net/your-portfolio" class="project-link-item" target="_blank">
+                        <i class="fab fa-behance"></i>
+                        <div class="link-content">
+                            <h3>Design Portfolio</h3>
+                            <p>Explore my design work on Behance</p>
+                        </div>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a> -->
+
+                    <a href="https://github.com/NIRAJ0909" class="project-link-item" target="_blank">
+                        <i class="fab fa-github"></i>
+                        <div class="link-content">
+                            <h3>GitHub Projects</h3>
+                            <p>Browse my code repositories</p>
+                        </div>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+
+                <!--    <a href="https://dribbble.com/your-username" class="project-link-item" target="_blank">
+                        <i class="fab fa-dribbble"></i>
+                        <div class="link-content">
+                            <h3>Dribbble Shots</h3>
+                            <p>Check out my UI design shots</p>
+                        </div>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>-->
+                </div>
+            </div>
+
             <!-- Memory Gallery 1 -->
             <div id="memory1" class="memory-gallery">
                 <h2>Photos of 48 hours Clock makers</h2>
                 <p>Capturing the sense of our 48 hours Clock makers event.</p>
                 <div class="gallery-grid">
-                    <img src="images/aa.jpg" alt="Berlin Photo 1">
-                    <img src="images/bb.jpg" alt="Berlin Photo 2">
-                    <img src="images/foot.jpg" alt="Berlin Photo 3">
-                    <img src="images/red.jpg" alt="Berlin Photo 4">
-                    <img src="images/img.jpg" alt="Berlin Photo 5">
-                    <img src="images/cer.jpg" alt="Berlin Photo 6">
+                    <img src="memories/aa.jpg" alt="Berlin Photo 1">
+                    <img src="memories/bb.jpg" alt="Berlin Photo 2">
+                    <img src="memories/foot.jpg" alt="Berlin Photo 4">
+                    <img src="memories/img.jpg" alt="Berlin Photo 5">
+                    <img src="memories/red.jpg" alt="Berlin Photo 6">
+                </div>
+            </div>
+
+              <!-- Memory Gallery 2 -->
+              <div id="memory2" class="memory-gallery">
+                <h2>Certificates</h2>
+                <p>Received by participating in competition and completing courses.</p>
+                <div class="gallery-grid">
+                    <img src="memories/cer.jpg" alt="Berlin Photo 1">
+                    
                 </div>
             </div>
         </div>
@@ -209,7 +280,7 @@
                             <i class="fas fa-phone"></i>
                             <div>
                                 <h4>Phone</h4>
-                                <p>+977 9810196579, 9749395345</p>
+                                <p>+977 9810196579, 9746935345</p>
                             </div>
                         </div>
                     </div>
@@ -239,6 +310,7 @@
                 </div>
                 
                 <div class="contact-form">
+                    <form action="https://formspree.io/f/mblojkvp"method="POST">
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Your Name</label>
@@ -277,7 +349,7 @@
             <div class="footer-brand">
                 <div class="brand">
                     <span class="brand-text">n1raj</span>
-                    <span class="x-figma">× figma</span>
+                    <span class="x-figma">× web & design</span>
                 </div>
                 <p>Crafting intuitive digital experiences that merge aesthetic beauty with functional design.</p>
                 <div class="social-links">
@@ -310,11 +382,11 @@
                 <h4>Contact Info</h4>
                 <p>Kathmandu, Nepal</p>
                 <p><a href="mailto:nirajniraj760@gmail.com">ninjaniraj760@gmail.com</a></p>
-                <p>+977 9810196579, 9746355345</p>
+                <p>+977 9810196579, 9746935345</p>
             </div>
         </div>
         <br>
-        <p style="display: block; text-align: center;">&copy; 2025 n1raj x-figma. All Rights Reserved.</p>
+        <p style="display: block; text-align: center;">&copy; 2025 n1raj x web & design. All Rights Reserved.</p>
     </footer>
    
     <script>
@@ -440,15 +512,10 @@
         const themeToggle = document.getElementById('themeToggle');
         const icon = themeToggle.querySelector('i');
         
-        // Check for saved user preference or use system preference
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        // Set initial theme
-        if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-            document.body.classList.add('dark-theme');
-            icon.classList.replace('fa-moon', 'fa-sun');
-        }
+        // Set initial theme to light mode
+        localStorage.setItem('theme', 'light');
+        icon.classList.replace('fa-sun', 'fa-moon');
+        document.body.classList.remove('dark-theme');
         
         // Toggle theme on button click
         themeToggle.addEventListener('click', () => {
@@ -507,5 +574,40 @@
             });
         });
     </script>
+    </script>
+    <!-- Remove the existing cursor elements since they're created by JavaScript -->
+    <!-- <div class="cursor-outer"></div>
+    <div class="cursor-inner"></div> -->
+    
+    <!-- Add cursor script before main.js -->
+    <script>
+        // Initialize cursor effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const cursorOuter = document.createElement('div');
+            const cursorInner = document.createElement('div');
+            
+            cursorOuter.classList.add('cursor-outer');
+            cursorInner.classList.add('cursor-inner');
+            
+            document.body.appendChild(cursorOuter);
+            document.body.appendChild(cursorInner);
+            
+            // Track cursor position
+            document.addEventListener('mousemove', (e) => {
+                requestAnimationFrame(() => {
+                    cursorOuter.style.left = e.clientX + 'px';
+                    cursorOuter.style.top = e.clientY + 'px';
+                    cursorInner.style.left = e.clientX + 'px';
+                    cursorInner.style.top = e.clientY + 'px';
+                });
+            });
+
+            // Add cursor-active class to body
+            document.body.classList.add('custom-cursor-active');
+        });
+    </script>
+    <!-- Add this before the closing body tag -->
+    <script src="js/theme.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,100 +1,74 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
+
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins for dev; restrict in production!
+    methods: ['POST'],
+    allowedHeaders: ['Content-Type', 'X-Auth-Token']
+}));
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/portfolio', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err));
+// Email sending endpoint
+app.post('/api/send-email', async (req, res) => {
+    try {
+        // Optional: Security token check
+        if (req.headers['x-auth-token'] !== '1C23E1763400BACA1AC6CB73635FDB6CA714') {
+            return res.status(403).json({ error: 'Unauthorized access' });
+        }
 
-// Message Schema
-const messageSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now }
-});
-const Message = mongoose.model('Message', messageSchema);
+        const { name, email, message, phone } = req.body;
 
-// Project Schema (if needed)
-const projectSchema = new mongoose.Schema({
-  title: String,
-  description: String,
-  category: String,
-  imageUrl: String,
-  createdAt: { type: Date, default: Date.now }
-});
-const Project = mongoose.model('Project', projectSchema);
+        // Validation
+        if (!name || !email || !message) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
 
-// API Routes
-// Get all messages
-app.get('/api/messages', async (req, res) => {
-  try {
-    const messages = await Message.find().sort({ createdAt: -1 });
-    res.json({ success: true, data: messages });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ error: 'Invalid email format' });
+        }
 
-// Create a new message
-app.post('/api/messages', async (req, res) => {
-  try {
-    const { name, email, message } = req.body;
-    const newMessage = new Message({ name, email, message });
-    await newMessage.save();
-    res.json({ success: true, data: newMessage });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
+        // Configure Gmail SMTP transporter
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
 
-// Get all projects
-app.get('/api/projects', async (req, res) => {
-  try {
-    const projects = await Project.find().sort({ createdAt: -1 });
-    res.json({ success: true, data: projects });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
+        // Compose email
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: 'ninjaniraj760@gmail.com',
+            subject: 'New Message from Portfolio Contact Form',
+            html: `
+                <h3>New Contact Form Submission</h3>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+                <p><strong>Message:</strong></p>
+                <p>${message}</p>
+            `
+        };
+
+        // Send email
+        await transporter.sendMail(mailOptions);
+        res.json({ success: true, message: 'Email sent successfully!' });
+
+    } catch (error) {
+        console.error('Email sending error:', error);
+        res.status(500).json({
+            error: 'Failed to send message. Please try again later.'
+        });
+    }
 });
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('public'));
-}
-
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// Create a new message
-app.post('/api/messages', async (req, res) => {
-  try {
-    const { name, email, message } = req.body;
-    
-    // Server-side validation
-    if (!name || !email || !message) {
-      return res.status(400).json({ success: false, error: 'All fields are required' });
-    }
-    
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ success: false, error: 'Invalid email format' });
-    }
-    
-    const newMessage = new Message({ name, email, message });
-    await newMessage.save();
-    res.json({ success: true, data: newMessage });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-});
