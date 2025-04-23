@@ -44,59 +44,6 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
     }
 });
 
-// Form handling
-document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const form = this;
-    const submitButton = form.querySelector('.send-btn');
-    const originalButtonText = submitButton.textContent;
-    
-    try {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Sending...';
-
-        const formData = {
-            name: document.getElementById('name').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            message: document.getElementById('message').value.trim()
-        };
-
-        if (!formData.name || !formData.email || !formData.message) {
-            throw new Error('Please fill in all fields');
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            throw new Error('Please enter a valid email address');
-        }
-
-        const response = await fetch('http://127.0.0.1:3000/api/contact', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        const result = await response.json();
-        
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to send message');
-        }
-
-        form.reset();
-        showMessage('Message sent successfully!', 'success');
-
-    } catch (error) {
-        showMessage(error.message || 'Error sending message', 'error');
-    } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = originalButtonText;
-    }
-});
-
 // Message display function
 function showMessage(message, type = 'success') {
     const existingMsg = document.querySelector('.message');
@@ -174,20 +121,6 @@ function scrollToContact(e) {
     }
 }
 
-// Initialize event listeners after DOM loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Set up button event listeners
-    document.querySelectorAll('.pricing-btn, .quote-btn').forEach(button => {
-        button.addEventListener('click', scrollToContact);
-    });
-    
-    // Handle initial hash if present
-    if (window.location.hash === '#contact') {
-        setTimeout(() => {
-            scrollToContact({ preventDefault: () => {} });
-        }, 100);
-    }
-});
 // Robust scroll to section function
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -216,25 +149,6 @@ function scrollToSection(sectionId) {
         section.classList.remove('highlight');
     }, 2000);
 }
-
-// Initialize everything after DOM loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Set up click handlers for all scroll buttons
-    document.querySelectorAll('[data-scroll-to]').forEach(button => {
-        button.addEventListener('click', function() {
-            const targetSection = this.getAttribute('data-scroll-to');
-            scrollToSection(targetSection);
-        });
-    });
-
-    // Handle hash links on page load
-    if (window.location.hash) {
-        const targetSection = window.location.hash.substring(1);
-        setTimeout(() => {
-            scrollToSection(targetSection);
-        }, 100);
-    }
-});
 
 // Gallery Functions
 function openGallery(galleryId) {
@@ -266,6 +180,67 @@ function closeGallery() {
   }
 }
 
+// Initialize everything after DOM loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up button event listeners for contact scrolling
+    document.querySelectorAll('.pricing-btn, .quote-btn').forEach(button => {
+        button.addEventListener('click', scrollToContact);
+    });
+    
+    // Handle initial hash if present
+    if (window.location.hash === '#contact') {
+        setTimeout(() => {
+            scrollToContact({ preventDefault: () => {} });
+        }, 100);
+    }
+    
+    // Set up click handlers for all scroll buttons
+    document.querySelectorAll('[data-scroll-to]').forEach(button => {
+        button.addEventListener('click', function() {
+            const targetSection = this.getAttribute('data-scroll-to');
+            scrollToSection(targetSection);
+        });
+    });
+
+    // Handle hash links on page load
+    if (window.location.hash) {
+        const targetSection = window.location.hash.substring(1);
+        setTimeout(() => {
+            scrollToSection(targetSection);
+        }, 100);
+    }
+    
+    // JavaScript Functionality for details
+    document.querySelectorAll('.view-details').forEach(button => {
+        button.addEventListener('click', function() {
+          this.nextElementSibling.classList.toggle('hidden');
+        });
+    });
+      
+    document.querySelectorAll('.thumbnail').forEach(img => {
+        img.addEventListener('click', function() {
+          const modal = document.querySelector('.image-modal');
+          const modalImg = document.getElementById('expanded-image');
+          
+          modal.classList.remove('hidden');
+          modalImg.src = this.src;
+        });
+    });
+      
+    document.querySelector('.close-modal')?.addEventListener('click', function() {
+        document.querySelector('.image-modal').classList.add('hidden');
+    });
+    
+    // Add contact form handling
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            return emailSend();
+        });
+    }
+});
+
 // Close when clicking outside content
 window.addEventListener('click', function(event) {
   const modal = document.getElementById('gallery-modal');
@@ -280,23 +255,101 @@ document.addEventListener('keydown', function(event) {
     closeGallery();
   }
 });
-// JavaScript Functionality
-document.querySelectorAll('.view-details').forEach(button => {
-    button.addEventListener('click', function() {
-      this.nextElementSibling.classList.toggle('hidden');
+
+// Custom cursor and trail effect
+document.addEventListener('DOMContentLoaded', function() {
+    // Create cursor elements
+    const cursorOuter = document.createElement('div');
+    const cursorInner = document.createElement('div');
+    
+    cursorOuter.classList.add('cursor-outer');
+    cursorInner.classList.add('cursor-inner');
+    
+    document.body.appendChild(cursorOuter);
+    document.body.appendChild(cursorInner);
+    
+    // Create trail elements
+    const trails = [];
+    const trailCount = 5;
+    
+    for (let i = 0; i < trailCount; i++) {
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        document.body.appendChild(trail);
+        trails.push({
+            element: trail,
+            x: 0,
+            y: 0,
+            speed: 0.2 - (i * 0.03)
+        });
+    }
+    
+    // Track mouse position
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    // Update cursor and trail positions
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Update main cursors
+        requestAnimationFrame(() => {
+            cursorOuter.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+            cursorInner.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        });
     });
-  });
-  
-  document.querySelectorAll('.thumbnail').forEach(img => {
-    img.addEventListener('click', function() {
-      const modal = document.querySelector('.image-modal');
-      const modalImg = document.getElementById('expanded-image');
-      
-      modal.classList.remove('hidden');
-      modalImg.src = this.src;
+    
+    // Animate trails
+    function animateTrails() {
+        trails.forEach((trail) => {
+            trail.x += (mouseX - trail.x) * trail.speed;
+            trail.y += (mouseY - trail.y) * trail.speed;
+            
+            trail.element.style.transform = `translate3d(${trail.x}px, ${trail.y}px, 0) scale(${trail.speed})`;
+        });
+        
+        requestAnimationFrame(animateTrails);
+    }
+    
+    animateTrails();
+    
+    // Interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, [role="button"]');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursorOuter.classList.add('cursor-hover');
+            cursorInner.classList.add('cursor-hover');
+            trails.forEach(trail => {
+                trail.element.classList.add('cursor-hover');
+            });
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            cursorOuter.classList.remove('cursor-hover');
+            cursorInner.classList.remove('cursor-hover');
+            trails.forEach(trail => {
+                trail.element.classList.remove('cursor-hover');
+            });
+        });
     });
-  });
-  
-  document.querySelector('.close-modal').addEventListener('click', function() {
-    document.querySelector('.image-modal').classList.add('hidden');
-  });
+    
+    // Click effects
+    document.addEventListener('mousedown', () => {
+        cursorOuter.classList.add('cursor-click');
+        cursorInner.classList.add('cursor-click');
+    });
+    
+    document.addEventListener('mouseup', () => {
+        cursorOuter.classList.remove('cursor-click');
+        cursorInner.classList.remove('cursor-click');
+    });
+    
+    // Hide default cursor
+    document.body.style.cursor = 'none';
+    const allElements = document.getElementsByTagName('*');
+    for (let i = 0; i < allElements.length; i++) {
+        allElements[i].style.cursor = 'none';
+    }
+});

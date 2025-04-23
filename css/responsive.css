@@ -3,6 +3,12 @@
     .hero h1 {
         font-size: 3.5rem;
     }
+
+    /* Cursor adjustments for larger screens */
+    .cursor-outer {
+        width: 25px;
+        height: 25px;
+    }
 }
 
 @media (max-width: 992px) {
@@ -24,15 +30,49 @@
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    /* Adjust cursor size for medium screens */
+    .cursor-outer {
+        width: 20px;
+        height: 20px;
+    }
+
+    .cursor-inner {
+        width: 6px;
+        height: 6px;
+    }
+
+    .cursor-trail {
+        width: 4px;
+        height: 4px;
+    }
 }
 
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem 5%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .nav-links {
-        display: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        margin-left: auto;
+    }
+
+    .nav-links a {
+        font-size: 0.85rem;
+        padding: 0.3rem;
+    }
+
+    .theme-toggle {
+        padding: 0.3rem;
+        margin-left: 0.5rem;
     }
 
     .hero h1 {
@@ -60,9 +100,33 @@
     .pricing-grid {
         grid-template-columns: 1fr;
     }
+
+    /* Disable custom cursor on touch devices */
+    .cursor-outer,
+    .cursor-inner,
+    .cursor-trail {
+        display: none;
+    }
+
+    body.custom-cursor-active,
+    body.custom-cursor-active * {
+        cursor: auto !important;
+    }
 }
 
 @media (max-width: 480px) {
+    .navbar {
+        padding: 1rem 3%;
+    }
+
+    .nav-links {
+        gap: 0.7rem;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
+    }
+
     .hero h1 {
         font-size: 2rem;
     }
