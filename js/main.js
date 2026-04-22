@@ -12,7 +12,6 @@ window.addEventListener('load', () => {
 
     const site = document.getElementById('siteContent');
     if (site) {
-      // Use opacity only — NO transform/scale, which breaks position:fixed on descendants
       site.style.transition = 'opacity 0.9s cubic-bezier(0.22,1,0.36,1) 2.6s';
       site.style.opacity = '0';
       setTimeout(() => { site.style.opacity = '1'; }, 200);
@@ -281,9 +280,7 @@ function setupVideoItem(video) {
   const item = video.closest('.video-item');
   if (!item) return;
 
-  // Always use metadata preload so browser can seek to first frame
   video.preload = 'metadata';
-  // Remove controls — we handle everything ourselves
   video.removeAttribute('controls');
 
   // Build custom overlay
@@ -300,6 +297,11 @@ function setupVideoItem(video) {
         <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
       </svg>
     </div>
+    <div class="vid-fs-btn" title="Fullscreen">
+      <svg viewBox="0 0 24 24" fill="white" width="16" height="16">
+        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+      </svg>
+    </div>
     <div class="vid-progress">
       <div class="vid-progress-bar"></div>
     </div>
@@ -311,6 +313,7 @@ function setupVideoItem(video) {
   const pauseBtn = overlay.querySelector('.vid-pause-btn');
   const bar      = overlay.querySelector('.vid-progress-bar');
   const timeEl   = overlay.querySelector('.vid-time');
+  const fsBtn    = overlay.querySelector('.vid-fs-btn');
 
   // Seek to first frame for thumbnail
   video.addEventListener('loadedmetadata', () => {
@@ -357,8 +360,7 @@ function setupVideoItem(video) {
   video.addEventListener('pause', onPause);
   video.addEventListener('ended', () => { onPause(); video.currentTime = 0; });
 
-  // Tap/click anywhere on item = toggle play/pause
-  // But clicking the progress bar scrubs instead
+  // Progress bar scrub
   overlay.querySelector('.vid-progress').addEventListener('click', (e) => {
     e.stopPropagation();
     const rect = e.currentTarget.getBoundingClientRect();
@@ -366,16 +368,53 @@ function setupVideoItem(video) {
     video.currentTime = pct * video.duration;
   });
 
+  // Tap/click to toggle play/pause
   item.addEventListener('click', (e) => {
     if (e.target.closest('.vid-progress')) return;
+    if (e.target.closest('.vid-fs-btn')) return;
     if (video.paused) {
-      // Pause all other videos first
       document.querySelectorAll('#gallery5 video').forEach(v => {
         if (v !== video && !v.paused) v.pause();
       });
       video.play();
     } else {
       video.pause();
+    }
+  });
+
+  // ── FULLSCREEN ──────────────────────────────
+  fsBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    } else if (video.webkitEnterFullscreen) {
+      // iOS Safari
+      video.webkitEnterFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
+    } else if (video.mozRequestFullScreen) {
+      video.mozRequestFullScreen();
+    } else if (video.msRequestFullscreen) {
+      video.msRequestFullscreen();
+    }
+  });
+
+  // Update fullscreen icon to "exit" when in fullscreen
+  const exitIcon = `<svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>`;
+  const enterIcon = `<svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>`;
+
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement === video) {
+      fsBtn.innerHTML = exitIcon;
+    } else {
+      fsBtn.innerHTML = enterIcon;
+    }
+  });
+  document.addEventListener('webkitfullscreenchange', () => {
+    if (document.webkitFullscreenElement === video || video.webkitDisplayingFullscreen) {
+      fsBtn.innerHTML = exitIcon;
+    } else {
+      fsBtn.innerHTML = enterIcon;
     }
   });
 }
@@ -394,20 +433,17 @@ window.openGallery = function(id) {
     document.body.style.overflow = 'hidden';
     document.body.style.paddingRight = scrollbarWidth + 'px';
 
-    // Setup all videos in the video gallery
     if (id === 'gallery5') {
       pane.querySelectorAll('video').forEach(v => setupVideoItem(v));
     }
   }
 };
 
-
 window.closeGallery = function() {
   modal.classList.remove('open');
   document.body.style.overflow = '';
   document.body.style.paddingRight = '';
 
-  // Pause all videos when closing
   modal.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
 };
 
@@ -473,7 +509,6 @@ window.addEventListener('scroll', () => {
   const sy = window.scrollY;
   const heroInner = document.querySelector('.hero-inner');
   if (heroInner) {
-    // Only transform hero-inner, never siteContent (breaks fixed positioning)
     heroInner.style.transform = `translateY(${sy * 0.25}px)`;
     heroInner.style.opacity   = Math.max(0, 1 - sy / 500);
   }
