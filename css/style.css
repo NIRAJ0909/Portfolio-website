@@ -1,3 +1,22 @@
+/* ── LINKTREE BUTTON ───────────────────────── */
+.linktree-btn {
+  display: inline-block;
+  background: linear-gradient(90deg, #39f 0%, #6c63ff 50%, #ea4c89 100%);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.3s, box-shadow 0.2s, transform 0.2s;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+.linktree-btn:hover {
+  background: linear-gradient(90deg, #ea4c89 0%, #6c63ff 50%, #39f 100%);
+  box-shadow: 0 6px 24px rgba(106,99,255,0.18);
+  transform: translateY(-2px) scale(1.04);
+}
 /* =============================================
    NIRAJ CHAUDHARY – 3D DRIBBBLE PORTFOLIO
    ============================================= */
